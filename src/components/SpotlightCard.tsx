@@ -42,7 +42,7 @@ export function SpotlightCard({
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className={`group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[#111116]/90 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-white/[0.16] ${className}`}
+      className={`group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[#111116]/90 backdrop-blur-sm transition-colors duration-300 hover:border-white/[0.15] ${className}`}
     >
       {/* Mouse-tracking spotlight glow */}
       <div

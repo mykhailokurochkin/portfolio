@@ -54,7 +54,7 @@ export default function HomePage() {
             className="p-6 sm:p-8 lg:col-span-8"
           >
             <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
-              <div className="relative h-20 w-20 shrink-0 sm:h-24 sm:w-24">
+              <div className="relative h-24 w-24 shrink-0 sm:h-28 sm:w-28">
                 <div
                   aria-hidden="true"
                   className="absolute -inset-1 rounded-full bg-gradient-to-tr from-sky-500/50 via-violet-500/40 to-emerald-400/50 blur-sm"
@@ -65,7 +65,7 @@ export default function HomePage() {
                     alt={PROFILE.name}
                     fill
                     priority
-                    sizes="96px"
+                    sizes="112px"
                     className="object-cover object-center"
                   />
                 </div>
