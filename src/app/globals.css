@@ -11,19 +11,79 @@
 
 html {
   scroll-behavior: smooth;
-  background-color: #0a0a0b;
-  color: #ededed;
+  background-color: #09090d;
+  color: #f4f4f5;
 }
 
 body {
-  background-color: #0a0a0b;
-  color: #ededed;
+  background-color: #09090d;
+  color: #f4f4f5;
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 ::selection {
-  background-color: rgba(255, 255, 255, 0.16);
+  background-color: rgba(56, 189, 248, 0.25);
   color: #ffffff;
+}
+
+@keyframes ambient-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(18px, -14px, 0) scale(1.05);
+  }
+}
+
+@keyframes ambient-float-reverse {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-16px, 16px, 0) scale(1.04);
+  }
+}
+
+@keyframes subtle-pulse-border {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-ambient-slow {
+  animation: ambient-float 14s ease-in-out infinite;
+}
+
+.animate-ambient-reverse {
+  animation: ambient-float-reverse 17s ease-in-out infinite;
+}
+
+.animate-node-pulse {
+  animation: subtle-pulse-border 3.2s ease-in-out infinite;
+}
+
+/* Subtle dot grid texture */
+.bg-dot-matrix {
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.06) 1px,
+    transparent 1px
+  );
+  background-size: 24px 24px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-ambient-slow,
+  .animate-ambient-reverse,
+  .animate-node-pulse {
+    animation: none;
+  }
 }

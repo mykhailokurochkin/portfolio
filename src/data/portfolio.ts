@@ -51,7 +51,7 @@ export const FEATURED_PROJECTS: ProjectItem[] = [
       "Offline-first strength training PWA for iPhone and Mac. Uses an IndexedDB outbox queue for instant offline workout logging that syncs to PostgreSQL/Neon when back online, built in a Turborepo monorepo with Better Auth and Playwright E2E tests.",
     stack: ["Next.js", "NestJS", "PostgreSQL", "Drizzle", "IndexedDB", "Playwright"],
     liveUrl: "https://liftory-app.vercel.app",
-    privateRepo: true,
+    githubUrl: "https://github.com/mykhailokurochkin/liftory",
   },
   {
     title: "DotaPilot",
