@@ -72,11 +72,7 @@ export default function HomePage() {
               </div>
 
               <div>
-                <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-2.5 py-0.5 text-xs text-emerald-300">
-                  <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-                  </span>
+                <div className="inline-flex items-center rounded-full border border-emerald-500/25 bg-emerald-500/10 px-2.5 py-0.5 text-xs text-emerald-300">
                   {PROFILE.status}
                 </div>
 
@@ -171,18 +167,13 @@ export default function HomePage() {
         {/* SELECTED WORK */}
         <section className="mt-16 sm:mt-20">
           <Reveal>
-            <div className="flex items-baseline justify-between">
-              <div>
-                <p className="font-mono text-xs uppercase tracking-[0.18em] text-sky-400/90">
-                  Selected Work
-                </p>
-                <h2 className="mt-1.5 text-2xl font-semibold tracking-tight text-white">
-                  Featured Projects
-                </h2>
-              </div>
-              <span className="hidden font-mono text-xs text-zinc-500 sm:inline">
-                01 — 03
-              </span>
+            <div>
+              <p className="font-mono text-xs uppercase tracking-[0.18em] text-sky-400/90">
+                Selected Work
+              </p>
+              <h2 className="mt-1.5 text-2xl font-semibold tracking-tight text-white">
+                Featured Projects
+              </h2>
             </div>
           </Reveal>
 
