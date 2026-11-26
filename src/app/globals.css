@@ -11,12 +11,12 @@
 
 html {
   scroll-behavior: smooth;
-  background-color: #09090d;
+  background-color: #07080d;
   color: #f4f4f5;
 }
 
 body {
-  background-color: #09090d;
+  background-color: #07080d;
   color: #f4f4f5;
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -25,65 +25,128 @@ body {
 }
 
 ::selection {
-  background-color: rgba(56, 189, 248, 0.25);
+  background-color: rgba(56, 189, 248, 0.28);
   color: #ffffff;
 }
 
-@keyframes ambient-float {
+/* Silky zero-gravity suspended floating rhythms */
+@keyframes float-1 {
+  0%,
+  100% {
+    transform: translate3d(0, 0px, 0);
+  }
+  50% {
+    transform: translate3d(0, -6px, 0);
+  }
+}
+
+@keyframes float-2 {
+  0%,
+  100% {
+    transform: translate3d(0, -4px, 0);
+  }
+  50% {
+    transform: translate3d(0, 5px, 0);
+  }
+}
+
+@keyframes float-3 {
+  0%,
+  100% {
+    transform: translate3d(0, 3px, 0);
+  }
+  50% {
+    transform: translate3d(0, -5px, 0);
+  }
+}
+
+@keyframes float-4 {
+  0%,
+  100% {
+    transform: translate3d(0, -2px, 0);
+  }
+  50% {
+    transform: translate3d(0, 6px, 0);
+  }
+}
+
+@keyframes aurora-drift-1 {
   0%,
   100% {
     transform: translate3d(0, 0, 0) scale(1);
   }
   50% {
-    transform: translate3d(18px, -14px, 0) scale(1.05);
+    transform: translate3d(32px, -24px, 0) scale(1.08);
   }
 }
 
-@keyframes ambient-float-reverse {
+@keyframes aurora-drift-2 {
   0%,
   100% {
     transform: translate3d(0, 0, 0) scale(1);
   }
   50% {
-    transform: translate3d(-16px, 16px, 0) scale(1.04);
+    transform: translate3d(-28px, 26px, 0) scale(1.06);
   }
 }
 
-@keyframes subtle-pulse-border {
+@keyframes node-breathe {
   0%,
   100% {
-    opacity: 0.45;
+    opacity: 0.6;
+    box-shadow: 0 0 0 0 rgba(56, 189, 248, 0);
   }
   50% {
     opacity: 1;
+    box-shadow: 0 0 14px -2px rgba(56, 189, 248, 0.35);
   }
 }
 
-.animate-ambient-slow {
-  animation: ambient-float 14s ease-in-out infinite;
+.animate-float-1 {
+  animation: float-1 8.5s cubic-bezier(0.37, 0, 0.63, 1) infinite;
 }
 
-.animate-ambient-reverse {
-  animation: ambient-float-reverse 17s ease-in-out infinite;
+.animate-float-2 {
+  animation: float-2 9.8s cubic-bezier(0.37, 0, 0.63, 1) infinite;
 }
 
-.animate-node-pulse {
-  animation: subtle-pulse-border 3.2s ease-in-out infinite;
+.animate-float-3 {
+  animation: float-3 10.6s cubic-bezier(0.37, 0, 0.63, 1) infinite;
 }
 
-/* Subtle dot grid texture */
-.bg-dot-matrix {
+.animate-float-4 {
+  animation: float-4 9.1s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+}
+
+.animate-aurora-1 {
+  animation: aurora-drift-1 18s ease-in-out infinite;
+}
+
+.animate-aurora-2 {
+  animation: aurora-drift-2 22s ease-in-out infinite;
+}
+
+.animate-node-breathe {
+  animation: node-breathe 3.6s ease-in-out infinite;
+}
+
+/* Subtle spatial dot grid */
+.bg-spatial-dots {
   background-image: radial-gradient(
-    rgba(255, 255, 255, 0.06) 1px,
+    rgba(255, 255, 255, 0.065) 1px,
     transparent 1px
   );
-  background-size: 24px 24px;
+  background-size: 28px 28px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-ambient-slow,
-  .animate-ambient-reverse,
-  .animate-node-pulse {
+  .animate-float-1,
+  .animate-float-2,
+  .animate-float-3,
+  .animate-float-4,
+  .animate-aurora-1,
+  .animate-aurora-2,
+  .animate-node-breathe {
     animation: none;
   }
 }
