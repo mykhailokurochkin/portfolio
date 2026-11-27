@@ -79,6 +79,7 @@ export function FloatingCard({
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
+    const isSmallScreen = window.innerWidth < 640;
 
     // Build a unique seed per card from variant + delay + DOM position
     const rect = el.getBoundingClientRect();
@@ -99,9 +100,13 @@ export function FloatingCard({
     const py1 = seeded(baseSeed + 7) * Math.PI * 2;
     const py2 = seeded(baseSeed + 8) * Math.PI * 2;
 
-    // Smooth 4-direction amplitudes (up, down, left, right)
-    const ampX = 5.5 + seeded(baseSeed + 9) * 3.5; // ~5.5–9px left/right
-    const ampY = 6.5 + seeded(baseSeed + 10) * 3.5; // ~6.5–10px up/down
+    // Smooth 4-direction amplitudes (gentler horizontal travel on narrow mobile screens)
+    const ampX = isSmallScreen
+      ? 2.5 + seeded(baseSeed + 9) * 1.5
+      : 5.5 + seeded(baseSeed + 9) * 3.5;
+    const ampY = isSmallScreen
+      ? 4.5 + seeded(baseSeed + 10) * 2
+      : 6.5 + seeded(baseSeed + 10) * 3.5;
 
     let isInView = true;
     let rafId = 0;
@@ -192,6 +197,7 @@ export function FloatingCard({
   }, [accent, floatVariant, floatDelay]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (window.matchMedia("(pointer: coarse)").matches) return;
     const el = cardRef.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();

@@ -49,7 +49,7 @@ export default function HomePage() {
   const [mathTutor, liftory, dotapilot] = FEATURED_PROJECTS;
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#07080D] text-zinc-100">
+    <div className="relative min-h-screen overflow-x-clip bg-[#07080D] text-zinc-100">
       {/* Living aurora & spatial dot field (radial gradients — zero GPU blur cost) */}
       <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-0">
         <div className="bg-spatial-dots absolute inset-0 opacity-45 [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_85%)]" />
@@ -61,16 +61,16 @@ export default function HomePage() {
       {/* Smooth lerped cursor ambient glow */}
       <CursorGlow />
 
-      <main className="relative z-10 mx-auto max-w-[1280px] px-5 py-12 sm:px-8 sm:py-16 lg:px-10">
+      <main className="relative z-10 mx-auto max-w-[1280px] px-4 py-10 sm:px-8 sm:py-16 lg:px-10">
         {/* TOP SPATIAL HERO CONSTELLATION */}
-        <section className="grid gap-6 lg:grid-cols-12">
+        <section className="grid gap-5 sm:gap-6 lg:grid-cols-12">
           {/* Identity Panel */}
           <Reveal className="lg:col-span-7">
             <FloatingCard
               accent="sky"
               floatVariant={1}
               floatDelay={0}
-              className="flex flex-col justify-between p-7 sm:p-9"
+              className="flex flex-col justify-between p-5 sm:p-9"
             >
               <div>
                 <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
@@ -156,7 +156,7 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <pre className="mt-4 overflow-x-auto font-mono text-xs leading-6 text-zinc-300 sm:text-[13px]">
+                <pre className="mt-4 overflow-x-auto font-mono text-[11px] leading-5 text-zinc-300 sm:text-[13px] sm:leading-6">
                   <code>
                     <span className="text-violet-400">export const</span>{" "}
                     <span className="text-sky-300">engineer</span>{" "}
@@ -198,7 +198,7 @@ export default function HomePage() {
             </Reveal>
 
             <Reveal delay={180}>
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-3 gap-2.5 sm:gap-4">
                 {HIGHLIGHTS.map((stat, idx) => (
                   <FloatingCard
                     key={stat.label}
@@ -207,14 +207,14 @@ export default function HomePage() {
                     }
                     floatVariant={((idx % 4) + 1) as 1 | 2 | 3 | 4}
                     floatDelay={-1.4 * (idx + 1)}
-                    className="flex flex-col items-center justify-center gap-1.5 px-3 py-5 text-center"
+                    className="flex flex-col items-center justify-center gap-1 px-2 py-4 text-center sm:gap-1.5 sm:px-3 sm:py-5"
                   >
                     <span
-                      className={`block font-mono text-2xl font-semibold leading-none tracking-tight sm:text-3xl ${stat.color}`}
+                      className={`block font-mono text-xl font-semibold leading-none tracking-tight sm:text-3xl ${stat.color}`}
                     >
                       {stat.value}
                     </span>
-                    <span className="block text-[11px] leading-tight text-zinc-400 sm:text-xs">
+                    <span className="block text-[10px] leading-tight text-zinc-400 sm:text-xs">
                       {stat.label}
                     </span>
                   </FloatingCard>
