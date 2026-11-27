@@ -65,7 +65,7 @@ export default function HomePage() {
         {/* TOP SPATIAL HERO CONSTELLATION */}
         <section className="grid gap-5 sm:gap-6 lg:grid-cols-12">
           {/* Identity Panel */}
-          <Reveal className="lg:col-span-7">
+          <Reveal className="min-w-0 lg:col-span-7">
             <FloatingCard
               accent="sky"
               floatVariant={1}
@@ -73,8 +73,8 @@ export default function HomePage() {
               className="flex flex-col justify-between p-5 sm:p-9"
             >
               <div>
-                <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
-                  <div className="relative h-24 w-24 shrink-0 sm:h-28 sm:w-28">
+                <div className="flex items-center gap-4 sm:gap-6">
+                  <div className="relative h-16 w-16 shrink-0 sm:h-28 sm:w-28">
                     <div
                       aria-hidden="true"
                       className="absolute -inset-1.5 rounded-full bg-gradient-to-tr from-sky-500/60 via-violet-500/50 to-emerald-400/60 blur-md opacity-80"
@@ -85,33 +85,33 @@ export default function HomePage() {
                         alt={PROFILE.name}
                         fill
                         priority
-                        sizes="112px"
+                        sizes="(max-width: 639px) 64px, 112px"
                         className="object-cover object-center"
                       />
                     </div>
                   </div>
 
-                  <div>
-                    <div className="inline-flex items-center rounded-full border border-emerald-500/25 bg-emerald-500/10 px-3 py-0.5 text-xs text-emerald-300">
+                  <div className="min-w-0">
+                    <div className="inline-flex max-w-full items-center rounded-full border border-emerald-500/25 bg-emerald-500/10 px-2.5 py-0.5 text-[11px] leading-snug text-emerald-300 sm:px-3 sm:text-xs">
                       {PROFILE.status}
                     </div>
-                    <h1 className="mt-2.5 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+                    <h1 className="mt-1.5 text-2xl font-semibold leading-tight tracking-tight text-white sm:mt-2.5 sm:text-4xl">
                       {PROFILE.name}
                     </h1>
-                    <p className="mt-1 bg-gradient-to-r from-sky-300 via-cyan-200 to-violet-300 bg-clip-text text-sm font-medium text-transparent sm:text-base">
+                    <p className="mt-0.5 bg-gradient-to-r from-sky-300 via-cyan-200 to-violet-300 bg-clip-text text-xs font-medium text-transparent sm:mt-1 sm:text-base">
                       {PROFILE.role}
                     </p>
                   </div>
                 </div>
 
-                <div className="mt-7 space-y-3 text-[15px] leading-relaxed text-zinc-300">
+                <div className="mt-5 space-y-2.5 text-sm leading-relaxed text-zinc-300 sm:mt-7 sm:space-y-3 sm:text-[15px]">
                   {PROFILE.bio.map((paragraph) => (
                     <p key={paragraph}>{paragraph}</p>
                   ))}
                 </div>
               </div>
 
-              <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-white/[0.08] pt-5 text-sm">
+              <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2.5 border-t border-white/[0.08] pt-4 text-sm sm:mt-8 sm:gap-x-6 sm:gap-y-2 sm:pt-5">
                 <CopyEmailLink />
                 <a
                   href={PROFILE.github}
@@ -136,13 +136,13 @@ export default function HomePage() {
           </Reveal>
 
           {/* Right Spatial Column: Code Identity Card + Impact Strip */}
-          <div className="grid gap-6 lg:col-span-5">
-            <Reveal delay={100}>
+          <div className="grid min-w-0 gap-5 sm:gap-6 lg:col-span-5">
+            <Reveal delay={100} className="min-w-0">
               <FloatingCard
                 accent="violet"
                 floatVariant={2}
                 floatDelay={-2.2}
-                className="p-6 sm:p-7"
+                className="p-4 sm:p-7"
               >
                 <div className="flex items-center justify-between border-b border-white/[0.07] pb-3">
                   <div className="flex items-center gap-2 font-mono text-xs text-zinc-400">
@@ -156,7 +156,7 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <pre className="mt-4 overflow-x-auto font-mono text-[11px] leading-5 text-zinc-300 sm:text-[13px] sm:leading-6">
+                <pre className="mt-3.5 overflow-x-auto whitespace-pre-wrap break-words font-mono text-[11px] leading-5 text-zinc-300 sm:mt-4 sm:whitespace-pre sm:text-[13px] sm:leading-6">
                   <code>
                     <span className="text-violet-400">export const</span>{" "}
                     <span className="text-sky-300">engineer</span>{" "}
