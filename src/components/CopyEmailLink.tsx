@@ -21,17 +21,31 @@ export function CopyEmailLink() {
     <button
       type="button"
       onClick={handleCopy}
-      className="inline-flex items-center gap-1.5 text-sm text-zinc-400 underline decoration-zinc-700 underline-offset-4 transition-colors hover:text-zinc-100 hover:decoration-zinc-400 cursor-pointer"
+      className="relative inline-grid items-center text-sm text-zinc-300 transition-colors duration-300 hover:text-zinc-100 cursor-pointer"
       title="Click to copy email"
+      aria-live="polite"
     >
-      {copied ? (
-        <>
-          <Check className="h-3.5 w-3.5 text-emerald-400" />
-          <span className="text-emerald-400">Copied email</span>
-        </>
-      ) : (
-        <span>{PROFILE.email}</span>
-      )}
+      <span
+        className={`col-start-1 row-start-1 underline decoration-zinc-700 underline-offset-4 transition-all duration-300 ease-out hover:decoration-zinc-400 ${
+          copied
+            ? "-translate-y-1 opacity-0 pointer-events-none"
+            : "translate-y-0 opacity-100"
+        }`}
+      >
+        {PROFILE.email}
+      </span>
+
+      <span
+        aria-hidden={!copied}
+        className={`col-start-1 row-start-1 inline-flex items-center gap-1.5 text-emerald-400 transition-all duration-300 ease-out ${
+          copied
+            ? "translate-y-0 opacity-100"
+            : "translate-y-1 opacity-0 pointer-events-none"
+        }`}
+      >
+        <Check className="h-3.5 w-3.5 shrink-0" />
+        <span>Copied email</span>
+      </span>
     </button>
   );
 }
