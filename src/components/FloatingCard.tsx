@@ -4,13 +4,22 @@ import { useEffect, useRef, type ReactNode } from "react";
 
 type AccentColor = "sky" | "emerald" | "violet" | "amber" | "cyan" | "zinc";
 
-const ACCENT_GLOW: Record<AccentColor, string> = {
-  sky: "rgba(56, 189, 248, 0.18)",
-  emerald: "rgba(16, 185, 129, 0.18)",
-  violet: "rgba(139, 92, 246, 0.20)",
-  amber: "rgba(245, 158, 11, 0.16)",
-  cyan: "rgba(34, 211, 238, 0.18)",
-  zinc: "rgba(255, 255, 255, 0.09)",
+const ACCENT_RGB: Record<AccentColor, string> = {
+  sky: "56, 189, 248",
+  emerald: "16, 185, 129",
+  violet: "139, 92, 246",
+  amber: "245, 158, 11",
+  cyan: "34, 211, 238",
+  zinc: "255, 255, 255",
+};
+
+const ACCENT_PEAK: Record<AccentColor, number> = {
+  sky: 0.14,
+  emerald: 0.14,
+  violet: 0.15,
+  amber: 0.13,
+  cyan: 0.14,
+  zinc: 0.08,
 };
 
 const ACCENT_SHADOW: Record<AccentColor, string> = {
@@ -139,10 +148,20 @@ export function FloatingCard({
 
         if (glowRef.current) {
           if (s.currentOpacity > 0.004) {
+            const rgb = ACCENT_RGB[accent];
+            const peak = ACCENT_PEAK[accent];
             glowRef.current.style.opacity = s.currentOpacity.toFixed(3);
-            glowRef.current.style.background = `radial-gradient(280px circle at ${s.currentGlowX.toFixed(
+            glowRef.current.style.background = `radial-gradient(260px circle at ${s.currentGlowX.toFixed(
               1
-            )}% ${s.currentGlowY.toFixed(1)}%, ${ACCENT_GLOW[accent]}, transparent 62%)`;
+            )}% ${s.currentGlowY.toFixed(
+              1
+            )}%, rgba(${rgb}, ${peak.toFixed(3)}) 0%, rgba(${rgb}, ${(
+              peak * 0.52
+            ).toFixed(3)}) 24%, rgba(${rgb}, ${(peak * 0.2).toFixed(
+              3
+            )}) 50%, rgba(${rgb}, ${(peak * 0.05).toFixed(
+              3
+            )}) 76%, transparent 100%)`;
           } else if (glowRef.current.style.opacity !== "0") {
             glowRef.current.style.opacity = "0";
           }
@@ -150,11 +169,11 @@ export function FloatingCard({
 
         if (sheenRef.current) {
           if (s.currentOpacity > 0.004) {
-            const angle = 115 + (s.currentGlowX - 50) * 0.4;
-            sheenRef.current.style.opacity = (s.currentOpacity * 0.5).toFixed(3);
+            const angle = 115 + (s.currentGlowX - 50) * 0.35;
+            sheenRef.current.style.opacity = (s.currentOpacity * 0.35).toFixed(3);
             sheenRef.current.style.background = `linear-gradient(${angle.toFixed(
               1
-            )}deg, transparent 30%, rgba(255,255,255,0.07) 50%, transparent 70%)`;
+            )}deg, transparent 25%, rgba(255,255,255,0.045) 50%, transparent 75%)`;
           } else if (sheenRef.current.style.opacity !== "0") {
             sheenRef.current.style.opacity = "0";
           }
