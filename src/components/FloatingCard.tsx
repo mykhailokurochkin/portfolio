@@ -65,7 +65,7 @@ export function FloatingCard({
 
   const tick = () => {
     const s = state.current;
-    const ease = 0.08;
+    const ease = 0.065;
 
     s.currentRx += (s.targetRx - s.currentRx) * ease;
     s.currentRy += (s.targetRy - s.currentRy) * ease;
@@ -126,9 +126,9 @@ export function FloatingCard({
     const px = (e.clientX - rect.left) / rect.width;
     const py = (e.clientY - rect.top) / rect.height;
 
-    // Expressive yet silky 3D perspective tilt (±5.5deg max)
-    state.current.targetRy = (px - 0.5) * 11;
-    state.current.targetRx = (0.5 - py) * 11;
+    // Calm, weighty 3D perspective tilt (±3.2deg max)
+    state.current.targetRy = (px - 0.5) * 6.4;
+    state.current.targetRx = (0.5 - py) * 6.4;
     state.current.targetGlowX = px * 100;
     state.current.targetGlowY = py * 100;
     state.current.targetOpacity = 1;
