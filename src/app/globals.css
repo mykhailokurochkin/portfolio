@@ -29,44 +29,93 @@ body {
   color: #ffffff;
 }
 
-/* Silky zero-gravity suspended floating rhythms */
+/* Expressive, silky zero-gravity suspended floating trajectories */
 @keyframes float-1 {
   0%,
   100% {
-    transform: translate3d(0, 0px, 0);
+    transform: translate3d(0px, 2px, 0) rotate(-0.35deg);
   }
   50% {
-    transform: translate3d(0, -6px, 0);
+    transform: translate3d(3px, -11px, 0) rotate(0.4deg);
   }
 }
 
 @keyframes float-2 {
   0%,
   100% {
-    transform: translate3d(0, -4px, 0);
+    transform: translate3d(2px, -9px, 0) rotate(0.35deg);
   }
   50% {
-    transform: translate3d(0, 5px, 0);
+    transform: translate3d(-3px, 4px, 0) rotate(-0.4deg);
   }
 }
 
 @keyframes float-3 {
   0%,
   100% {
-    transform: translate3d(0, 3px, 0);
+    transform: translate3d(-2px, 4px, 0) rotate(0.3deg);
   }
   50% {
-    transform: translate3d(0, -5px, 0);
+    transform: translate3d(3px, -10px, 0) rotate(-0.35deg);
   }
 }
 
 @keyframes float-4 {
   0%,
   100% {
-    transform: translate3d(0, -2px, 0);
+    transform: translate3d(2px, -8px, 0) rotate(-0.3deg);
   }
   50% {
-    transform: translate3d(0, 6px, 0);
+    transform: translate3d(-2px, 5px, 0) rotate(0.35deg);
+  }
+}
+
+/* Synchronized levitation shadows (shrink & soften when card rises) */
+@keyframes shadow-1 {
+  0%,
+  100% {
+    transform: scaleX(1) scaleY(1);
+    opacity: 0.72;
+  }
+  50% {
+    transform: scaleX(0.86) scaleY(0.82);
+    opacity: 0.4;
+  }
+}
+
+@keyframes shadow-2 {
+  0%,
+  100% {
+    transform: scaleX(0.86) scaleY(0.82);
+    opacity: 0.42;
+  }
+  50% {
+    transform: scaleX(1) scaleY(1);
+    opacity: 0.72;
+  }
+}
+
+@keyframes shadow-3 {
+  0%,
+  100% {
+    transform: scaleX(1) scaleY(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scaleX(0.87) scaleY(0.82);
+    opacity: 0.4;
+  }
+}
+
+@keyframes shadow-4 {
+  0%,
+  100% {
+    transform: scaleX(0.88) scaleY(0.84);
+    opacity: 0.42;
+  }
+  50% {
+    transform: scaleX(1) scaleY(1);
+    opacity: 0.72;
   }
 }
 
@@ -76,7 +125,7 @@ body {
     transform: translate3d(0, 0, 0) scale(1);
   }
   50% {
-    transform: translate3d(32px, -24px, 0) scale(1.08);
+    transform: translate3d(36px, -28px, 0) scale(1.09);
   }
 }
 
@@ -86,36 +135,52 @@ body {
     transform: translate3d(0, 0, 0) scale(1);
   }
   50% {
-    transform: translate3d(-28px, 26px, 0) scale(1.06);
+    transform: translate3d(-32px, 28px, 0) scale(1.07);
   }
 }
 
 @keyframes node-breathe {
   0%,
   100% {
-    opacity: 0.6;
+    opacity: 0.65;
     box-shadow: 0 0 0 0 rgba(56, 189, 248, 0);
   }
   50% {
     opacity: 1;
-    box-shadow: 0 0 14px -2px rgba(56, 189, 248, 0.35);
+    box-shadow: 0 0 16px -2px rgba(56, 189, 248, 0.4);
   }
 }
 
 .animate-float-1 {
-  animation: float-1 8.5s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  animation: float-1 6.8s cubic-bezier(0.37, 0, 0.63, 1) infinite;
 }
 
 .animate-float-2 {
-  animation: float-2 9.8s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  animation: float-2 7.6s cubic-bezier(0.37, 0, 0.63, 1) infinite;
 }
 
 .animate-float-3 {
-  animation: float-3 10.6s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  animation: float-3 8.2s cubic-bezier(0.37, 0, 0.63, 1) infinite;
 }
 
 .animate-float-4 {
-  animation: float-4 9.1s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  animation: float-4 7.2s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+}
+
+.animate-shadow-1 {
+  animation: shadow-1 6.8s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+}
+
+.animate-shadow-2 {
+  animation: shadow-2 7.6s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+}
+
+.animate-shadow-3 {
+  animation: shadow-3 8.2s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+}
+
+.animate-shadow-4 {
+  animation: shadow-4 7.2s cubic-bezier(0.37, 0, 0.63, 1) infinite;
 }
 
 .animate-aurora-1 {
@@ -127,7 +192,7 @@ body {
 }
 
 .animate-node-breathe {
-  animation: node-breathe 3.6s ease-in-out infinite;
+  animation: node-breathe 3.4s ease-in-out infinite;
 }
 
 /* Subtle spatial dot grid */
@@ -144,6 +209,10 @@ body {
   .animate-float-2,
   .animate-float-3,
   .animate-float-4,
+  .animate-shadow-1,
+  .animate-shadow-2,
+  .animate-shadow-3,
+  .animate-shadow-4,
   .animate-aurora-1,
   .animate-aurora-2,
   .animate-node-breathe {

@@ -207,14 +207,14 @@ export default function HomePage() {
                     }
                     floatVariant={((idx % 4) + 1) as 1 | 2 | 3 | 4}
                     floatDelay={-1.4 * (idx + 1)}
-                    className="flex flex-col items-center justify-center px-3 py-5 text-center"
+                    className="flex flex-col items-center justify-center gap-1.5 px-3 py-5 text-center"
                   >
                     <span
-                      className={`font-mono text-2xl font-semibold tracking-tight sm:text-3xl ${stat.color}`}
+                      className={`block font-mono text-2xl font-semibold leading-none tracking-tight sm:text-3xl ${stat.color}`}
                     >
                       {stat.value}
                     </span>
-                    <span className="mt-1.5 text-[11px] text-zinc-400 sm:text-xs">
+                    <span className="block text-[11px] leading-tight text-zinc-400 sm:text-xs">
                       {stat.label}
                     </span>
                   </FloatingCard>
