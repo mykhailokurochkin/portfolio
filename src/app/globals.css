@@ -29,47 +29,6 @@ body {
   color: #ffffff;
 }
 
-/* Pure GPU-composited vertical levitation (zero subpixel snapping) */
-@keyframes float-1 {
-  0%,
-  100% {
-    transform: translate3d(0, 0px, 0);
-  }
-  50% {
-    transform: translate3d(0, -10px, 0);
-  }
-}
-
-@keyframes float-2 {
-  0%,
-  100% {
-    transform: translate3d(0, -8px, 0);
-  }
-  50% {
-    transform: translate3d(0, 2px, 0);
-  }
-}
-
-@keyframes float-3 {
-  0%,
-  100% {
-    transform: translate3d(0, 2px, 0);
-  }
-  50% {
-    transform: translate3d(0, -8px, 0);
-  }
-}
-
-@keyframes float-4 {
-  0%,
-  100% {
-    transform: translate3d(0, -6px, 0);
-  }
-  50% {
-    transform: translate3d(0, 3px, 0);
-  }
-}
-
 @keyframes aurora-drift-1 {
   0%,
   100% {
@@ -100,26 +59,6 @@ body {
   }
 }
 
-.animate-float-1 {
-  animation: float-1 6.4s ease-in-out infinite;
-  will-change: transform;
-}
-
-.animate-float-2 {
-  animation: float-2 7.3s ease-in-out infinite;
-  will-change: transform;
-}
-
-.animate-float-3 {
-  animation: float-3 8.1s ease-in-out infinite;
-  will-change: transform;
-}
-
-.animate-float-4 {
-  animation: float-4 6.9s ease-in-out infinite;
-  will-change: transform;
-}
-
 .animate-aurora-1 {
   animation: aurora-drift-1 20s ease-in-out infinite;
   will-change: transform;
@@ -144,10 +83,6 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-float-1,
-  .animate-float-2,
-  .animate-float-3,
-  .animate-float-4,
   .animate-aurora-1,
   .animate-aurora-2,
   .animate-node-breathe {

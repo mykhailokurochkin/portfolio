@@ -25,6 +25,12 @@ const ACCENT_SHADOW: Record<AccentColor, string> = {
   zinc: "0 22px 44px -20px rgba(0, 0, 0, 0.82), inset 0 1px 0 0 rgba(255, 255, 255, 0.10)",
 };
 
+// Deterministic pseudo-random generator so each card gets unique organic frequencies & phases
+function seeded(seed: number) {
+  const x = Math.sin(seed * 127.1 + 311.7) * 43758.5453123;
+  return x - Math.floor(x);
+}
+
 interface FloatingCardProps {
   children: ReactNode;
   accent?: AccentColor;
@@ -44,7 +50,7 @@ export function FloatingCard({
   const glowRef = useRef<HTMLDivElement>(null);
   const sheenRef = useRef<HTMLDivElement>(null);
 
-  const state = useRef({
+  const hoverState = useRef({
     targetRx: 0,
     targetRy: 0,
     currentRx: 0,
@@ -55,72 +61,116 @@ export function FloatingCard({
     currentGlowY: 50,
     targetOpacity: 0,
     currentOpacity: 0,
-    rafId: 0,
-    active: false,
   });
 
   useEffect(() => {
-    const s = state.current;
-    return () => {
-      if (s.rafId) cancelAnimationFrame(s.rafId);
-    };
-  }, []);
+    const el = cardRef.current;
+    if (!el) return;
 
-  const tick = () => {
-    const s = state.current;
-    const ease = 0.065;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
 
-    s.currentRx += (s.targetRx - s.currentRx) * ease;
-    s.currentRy += (s.targetRy - s.currentRy) * ease;
-    s.currentGlowX += (s.targetGlowX - s.currentGlowX) * ease;
-    s.currentGlowY += (s.targetGlowY - s.currentGlowY) * ease;
-    s.currentOpacity += (s.targetOpacity - s.currentOpacity) * 0.1;
+    // Build a unique seed per card from variant + delay + DOM position
+    const rect = el.getBoundingClientRect();
+    const baseSeed =
+      floatVariant * 19.37 +
+      Math.abs(floatDelay) * 7.13 +
+      (rect.left % 97) * 0.17 +
+      (rect.top % 89) * 0.23;
 
-    if (cardRef.current) {
-      cardRef.current.style.transform = `perspective(1000px) rotateX(${s.currentRx.toFixed(
-        3
-      )}deg) rotateY(${s.currentRy.toFixed(3)}deg) translateZ(0)`;
-    }
+    // Unique irrational-ratio frequencies for smooth, non-repeating 4-way zero-gravity drift
+    const fx1 = 0.42 + seeded(baseSeed + 1) * 0.24;
+    const fx2 = 0.21 + seeded(baseSeed + 2) * 0.16;
+    const fy1 = 0.48 + seeded(baseSeed + 3) * 0.26;
+    const fy2 = 0.24 + seeded(baseSeed + 4) * 0.17;
 
-    if (glowRef.current) {
-      glowRef.current.style.opacity = s.currentOpacity.toFixed(3);
-      glowRef.current.style.background = `radial-gradient(460px circle at ${s.currentGlowX.toFixed(
-        1
-      )}% ${s.currentGlowY.toFixed(1)}%, ${ACCENT_GLOW[accent]}, transparent 64%)`;
-    }
+    const px1 = seeded(baseSeed + 5) * Math.PI * 2;
+    const px2 = seeded(baseSeed + 6) * Math.PI * 2;
+    const py1 = seeded(baseSeed + 7) * Math.PI * 2;
+    const py2 = seeded(baseSeed + 8) * Math.PI * 2;
 
-    if (sheenRef.current) {
-      const angle = 115 + (s.currentGlowX - 50) * 0.4;
-      sheenRef.current.style.opacity = (s.currentOpacity * 0.5).toFixed(3);
-      sheenRef.current.style.background = `linear-gradient(${angle.toFixed(
-        1
-      )}deg, transparent 30%, rgba(255,255,255,0.07) 50%, transparent 70%)`;
-    }
+    // Smooth 4-direction amplitudes (up, down, left, right)
+    const ampX = 5.5 + seeded(baseSeed + 9) * 3.5; // ~5.5–9px left/right
+    const ampY = 6.5 + seeded(baseSeed + 10) * 3.5; // ~6.5–10px up/down
 
-    const settled =
-      !s.active &&
-      Math.abs(s.currentRx) < 0.01 &&
-      Math.abs(s.currentRy) < 0.01 &&
-      s.currentOpacity < 0.005;
+    let isInView = true;
+    let rafId = 0;
 
-    if (!settled) {
-      s.rafId = requestAnimationFrame(tick);
-    } else {
-      s.rafId = 0;
-      if (cardRef.current) {
-        cardRef.current.style.transform =
-          "perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0)";
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isInView = entry.isIntersecting;
+      },
+      { rootMargin: "120px" }
+    );
+    observer.observe(el);
+
+    const startTime = performance.now();
+
+    const tick = (now: number) => {
+      if (isInView) {
+        const s = hoverState.current;
+        const ease = 0.065;
+
+        s.currentRx += (s.targetRx - s.currentRx) * ease;
+        s.currentRy += (s.targetRy - s.currentRy) * ease;
+        s.currentGlowX += (s.targetGlowX - s.currentGlowX) * ease;
+        s.currentGlowY += (s.targetGlowY - s.currentGlowY) * ease;
+        s.currentOpacity += (s.targetOpacity - s.currentOpacity) * 0.09;
+
+        let dx = 0;
+        let dy = 0;
+
+        if (!prefersReducedMotion) {
+          const t = (now - startTime) * 0.001;
+          dx =
+            Math.sin(t * fx1 + px1) * ampX * 0.72 +
+            Math.cos(t * fx2 + px2) * ampX * 0.28;
+          dy =
+            Math.cos(t * fy1 + py1) * ampY * 0.72 +
+            Math.sin(t * fy2 + py2) * ampY * 0.28;
+        }
+
+        el.style.transform = `translate3d(${dx.toFixed(2)}px, ${dy.toFixed(
+          2
+        )}px, 0) perspective(1000px) rotateX(${s.currentRx.toFixed(
+          3
+        )}deg) rotateY(${s.currentRy.toFixed(3)}deg)`;
+
+        if (glowRef.current) {
+          if (s.currentOpacity > 0.004) {
+            glowRef.current.style.opacity = s.currentOpacity.toFixed(3);
+            glowRef.current.style.background = `radial-gradient(460px circle at ${s.currentGlowX.toFixed(
+              1
+            )}% ${s.currentGlowY.toFixed(1)}%, ${ACCENT_GLOW[accent]}, transparent 64%)`;
+          } else if (glowRef.current.style.opacity !== "0") {
+            glowRef.current.style.opacity = "0";
+          }
+        }
+
+        if (sheenRef.current) {
+          if (s.currentOpacity > 0.004) {
+            const angle = 115 + (s.currentGlowX - 50) * 0.4;
+            sheenRef.current.style.opacity = (s.currentOpacity * 0.5).toFixed(3);
+            sheenRef.current.style.background = `linear-gradient(${angle.toFixed(
+              1
+            )}deg, transparent 30%, rgba(255,255,255,0.07) 50%, transparent 70%)`;
+          } else if (sheenRef.current.style.opacity !== "0") {
+            sheenRef.current.style.opacity = "0";
+          }
+        }
       }
-      if (glowRef.current) glowRef.current.style.opacity = "0";
-      if (sheenRef.current) sheenRef.current.style.opacity = "0";
-    }
-  };
 
-  const ensureLoop = () => {
-    if (!state.current.rafId) {
-      state.current.rafId = requestAnimationFrame(tick);
-    }
-  };
+      rafId = requestAnimationFrame(tick);
+    };
+
+    rafId = requestAnimationFrame(tick);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      observer.disconnect();
+    };
+  }, [accent, floatVariant, floatDelay]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = cardRef.current;
@@ -129,75 +179,53 @@ export function FloatingCard({
     const px = (e.clientX - rect.left) / rect.width;
     const py = (e.clientY - rect.top) / rect.height;
 
-    state.current.targetRy = (px - 0.5) * 6;
-    state.current.targetRx = (0.5 - py) * 6;
-    state.current.targetGlowX = px * 100;
-    state.current.targetGlowY = py * 100;
-    state.current.targetOpacity = 1;
-    state.current.active = true;
-    ensureLoop();
+    hoverState.current.targetRy = (px - 0.5) * 6;
+    hoverState.current.targetRx = (0.5 - py) * 6;
+    hoverState.current.targetGlowX = px * 100;
+    hoverState.current.targetGlowY = py * 100;
+    hoverState.current.targetOpacity = 1;
   };
 
   const handleMouseLeave = () => {
-    state.current.targetRx = 0;
-    state.current.targetRy = 0;
-    state.current.targetOpacity = 0;
-    state.current.active = false;
-    ensureLoop();
+    hoverState.current.targetRx = 0;
+    hoverState.current.targetRy = 0;
+    hoverState.current.targetOpacity = 0;
   };
-
-  const floatClass =
-    floatVariant === 1
-      ? "animate-float-1"
-      : floatVariant === 2
-        ? "animate-float-2"
-        : floatVariant === 3
-          ? "animate-float-3"
-          : "animate-float-4";
 
   return (
     <div
-      className={`${floatClass} relative h-full`}
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
       style={{
-        animationDelay: `${floatDelay}s`,
+        boxShadow: ACCENT_SHADOW[accent],
+        transform: "translate3d(0, 0, 0)",
         backfaceVisibility: "hidden",
         WebkitBackfaceVisibility: "hidden",
       }}
+      className="group relative h-full overflow-hidden rounded-3xl border border-white/[0.10] bg-gradient-to-b from-[#131622]/95 to-[#0D0F17]/95 transition-[border-color] duration-500 ease-out hover:border-white/[0.20] will-change-transform"
     >
+      {/* Top specular glass highlight */}
       <div
-        ref={cardRef}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        style={{
-          boxShadow: ACCENT_SHADOW[accent],
-          transform: "translateZ(0)",
-          backfaceVisibility: "hidden",
-          WebkitBackfaceVisibility: "hidden",
-        }}
-        className="group relative h-full overflow-hidden rounded-3xl border border-white/[0.10] bg-gradient-to-b from-[#131622]/95 to-[#0D0F17]/95 transition-[border-color] duration-500 ease-out hover:border-white/[0.20]"
-      >
-        {/* Top specular glass highlight */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"
-        />
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"
+      />
 
-        {/* Smooth lerped cursor spotlight */}
-        <div
-          ref={glowRef}
-          aria-hidden="true"
-          className="pointer-events-none absolute -inset-px rounded-3xl opacity-0"
-        />
+      {/* Smooth lerped cursor spotlight */}
+      <div
+        ref={glowRef}
+        aria-hidden="true"
+        className="pointer-events-none absolute -inset-px rounded-3xl opacity-0"
+      />
 
-        {/* Dynamic glass specular sheen */}
-        <div
-          ref={sheenRef}
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 rounded-3xl opacity-0"
-        />
+      {/* Dynamic glass specular sheen */}
+      <div
+        ref={sheenRef}
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 rounded-3xl opacity-0"
+      />
 
-        <div className={`relative z-10 h-full ${className}`}>{children}</div>
-      </div>
+      <div className={`relative z-10 h-full ${className}`}>{children}</div>
     </div>
   );
 }
