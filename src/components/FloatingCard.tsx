@@ -179,8 +179,8 @@ export function FloatingCard({
     const px = (e.clientX - rect.left) / rect.width;
     const py = (e.clientY - rect.top) / rect.height;
 
-    hoverState.current.targetRy = (px - 0.5) * 6;
-    hoverState.current.targetRx = (0.5 - py) * 6;
+    hoverState.current.targetRy = (px - 0.5) * 3.2;
+    hoverState.current.targetRx = (0.5 - py) * 3.2;
     hoverState.current.targetGlowX = px * 100;
     hoverState.current.targetGlowY = py * 100;
     hoverState.current.targetOpacity = 1;
