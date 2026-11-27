@@ -43,7 +43,7 @@ export function CursorGlow() {
     <div
       ref={ref}
       aria-hidden="true"
-      className="pointer-events-none fixed top-0 left-0 z-0 hidden h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle,rgba(56,189,248,0.075)_0%,rgba(139,92,246,0.045)_42%,transparent_72%)] blur-2xl will-change-transform md:block"
+      className="pointer-events-none fixed top-0 left-0 z-0 hidden h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle,rgba(56,189,248,0.08)_0%,rgba(139,92,246,0.045)_42%,transparent_70%)] will-change-transform md:block"
     />
   );
 }

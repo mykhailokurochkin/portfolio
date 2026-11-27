@@ -5,21 +5,24 @@ import { useEffect, useRef, type ReactNode } from "react";
 type AccentColor = "sky" | "emerald" | "violet" | "amber" | "cyan" | "zinc";
 
 const ACCENT_GLOW: Record<AccentColor, string> = {
-  sky: "rgba(56, 189, 248, 0.20)",
-  emerald: "rgba(16, 185, 129, 0.20)",
-  violet: "rgba(139, 92, 246, 0.22)",
-  amber: "rgba(245, 158, 11, 0.18)",
-  cyan: "rgba(34, 211, 238, 0.20)",
-  zinc: "rgba(255, 255, 255, 0.11)",
+  sky: "rgba(56, 189, 248, 0.18)",
+  emerald: "rgba(16, 185, 129, 0.18)",
+  violet: "rgba(139, 92, 246, 0.20)",
+  amber: "rgba(245, 158, 11, 0.16)",
+  cyan: "rgba(34, 211, 238, 0.18)",
+  zinc: "rgba(255, 255, 255, 0.09)",
 };
 
-const ACCENT_SHADOW_COLOR: Record<AccentColor, string> = {
-  sky: "rgba(56, 189, 248, 0.28)",
-  emerald: "rgba(16, 185, 129, 0.26)",
-  violet: "rgba(139, 92, 246, 0.30)",
-  amber: "rgba(245, 158, 11, 0.24)",
-  cyan: "rgba(34, 211, 238, 0.26)",
-  zinc: "rgba(0, 0, 0, 0.65)",
+const ACCENT_SHADOW: Record<AccentColor, string> = {
+  sky: "0 26px 52px -24px rgba(56, 189, 248, 0.22), 0 18px 36px -18px rgba(0, 0, 0, 0.8), inset 0 1px 0 0 rgba(255, 255, 255, 0.11)",
+  emerald:
+    "0 26px 52px -24px rgba(16, 185, 129, 0.20), 0 18px 36px -18px rgba(0, 0, 0, 0.8), inset 0 1px 0 0 rgba(255, 255, 255, 0.11)",
+  violet:
+    "0 26px 52px -24px rgba(139, 92, 246, 0.24), 0 18px 36px -18px rgba(0, 0, 0, 0.8), inset 0 1px 0 0 rgba(255, 255, 255, 0.11)",
+  amber:
+    "0 26px 52px -24px rgba(245, 158, 11, 0.18), 0 18px 36px -18px rgba(0, 0, 0, 0.8), inset 0 1px 0 0 rgba(255, 255, 255, 0.11)",
+  cyan: "0 26px 52px -24px rgba(34, 211, 238, 0.20), 0 18px 36px -18px rgba(0, 0, 0, 0.8), inset 0 1px 0 0 rgba(255, 255, 255, 0.11)",
+  zinc: "0 22px 44px -20px rgba(0, 0, 0, 0.82), inset 0 1px 0 0 rgba(255, 255, 255, 0.10)",
 };
 
 interface FloatingCardProps {
@@ -76,22 +79,22 @@ export function FloatingCard({
     if (cardRef.current) {
       cardRef.current.style.transform = `perspective(1000px) rotateX(${s.currentRx.toFixed(
         3
-      )}deg) rotateY(${s.currentRy.toFixed(3)}deg)`;
+      )}deg) rotateY(${s.currentRy.toFixed(3)}deg) translateZ(0)`;
     }
 
     if (glowRef.current) {
       glowRef.current.style.opacity = s.currentOpacity.toFixed(3);
-      glowRef.current.style.background = `radial-gradient(480px circle at ${s.currentGlowX.toFixed(
+      glowRef.current.style.background = `radial-gradient(460px circle at ${s.currentGlowX.toFixed(
         1
       )}% ${s.currentGlowY.toFixed(1)}%, ${ACCENT_GLOW[accent]}, transparent 64%)`;
     }
 
     if (sheenRef.current) {
-      const angle = 115 + (s.currentGlowX - 50) * 0.45;
-      sheenRef.current.style.opacity = (s.currentOpacity * 0.55).toFixed(3);
+      const angle = 115 + (s.currentGlowX - 50) * 0.4;
+      sheenRef.current.style.opacity = (s.currentOpacity * 0.5).toFixed(3);
       sheenRef.current.style.background = `linear-gradient(${angle.toFixed(
         1
-      )}deg, transparent 30%, rgba(255,255,255,0.08) 50%, transparent 70%)`;
+      )}deg, transparent 30%, rgba(255,255,255,0.07) 50%, transparent 70%)`;
     }
 
     const settled =
@@ -106,7 +109,7 @@ export function FloatingCard({
       s.rafId = 0;
       if (cardRef.current) {
         cardRef.current.style.transform =
-          "perspective(1000px) rotateX(0deg) rotateY(0deg)";
+          "perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0)";
       }
       if (glowRef.current) glowRef.current.style.opacity = "0";
       if (sheenRef.current) sheenRef.current.style.opacity = "0";
@@ -126,9 +129,8 @@ export function FloatingCard({
     const px = (e.clientX - rect.left) / rect.width;
     const py = (e.clientY - rect.top) / rect.height;
 
-    // Calm, weighty 3D perspective tilt (±3.2deg max)
-    state.current.targetRy = (px - 0.5) * 6.4;
-    state.current.targetRx = (0.5 - py) * 6.4;
+    state.current.targetRy = (px - 0.5) * 6;
+    state.current.targetRx = (0.5 - py) * 6;
     state.current.targetGlowX = px * 100;
     state.current.targetGlowY = py * 100;
     state.current.targetOpacity = 1;
@@ -153,60 +155,48 @@ export function FloatingCard({
           ? "animate-float-3"
           : "animate-float-4";
 
-  const shadowClass =
-    floatVariant === 1
-      ? "animate-shadow-1"
-      : floatVariant === 2
-        ? "animate-shadow-2"
-        : floatVariant === 3
-          ? "animate-shadow-3"
-          : "animate-shadow-4";
-
   return (
-    <div className="relative h-full">
-      {/* Ground levitation shadow that breathes opposite to the floating card */}
+    <div
+      className={`${floatClass} relative h-full`}
+      style={{
+        animationDelay: `${floatDelay}s`,
+        backfaceVisibility: "hidden",
+        WebkitBackfaceVisibility: "hidden",
+      }}
+    >
       <div
-        aria-hidden="true"
+        ref={cardRef}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
         style={{
-          animationDelay: `${floatDelay}s`,
-          background: `radial-gradient(ellipse at center, ${ACCENT_SHADOW_COLOR[accent]} 0%, rgba(0,0,0,0.55) 45%, transparent 75%)`,
+          boxShadow: ACCENT_SHADOW[accent],
+          transform: "translateZ(0)",
+          backfaceVisibility: "hidden",
+          WebkitBackfaceVisibility: "hidden",
         }}
-        className={`${shadowClass} pointer-events-none absolute -bottom-5 left-[8%] right-[8%] h-10 rounded-full blur-2xl`}
-      />
-
-      <div
-        className={`${floatClass} relative h-full will-change-transform`}
-        style={{ animationDelay: `${floatDelay}s` }}
+        className="group relative h-full overflow-hidden rounded-3xl border border-white/[0.10] bg-gradient-to-b from-[#131622]/95 to-[#0D0F17]/95 transition-[border-color] duration-500 ease-out hover:border-white/[0.20]"
       >
+        {/* Top specular glass highlight */}
         <div
-          ref={cardRef}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-          className="group relative h-full overflow-hidden rounded-3xl border border-white/[0.10] bg-[#10121A]/75 shadow-[0_28px_60px_-24px_rgba(0,0,0,0.85),inset_0_1px_0_0_rgba(255,255,255,0.12)] backdrop-blur-xl transition-[border-color] duration-500 ease-out hover:border-white/[0.20] will-change-transform"
-        >
-          {/* Top specular glass highlight */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"
-          />
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"
+        />
 
-          {/* Smooth lerped cursor spotlight */}
-          <div
-            ref={glowRef}
-            aria-hidden="true"
-            className="pointer-events-none absolute -inset-px rounded-3xl opacity-0"
-          />
+        {/* Smooth lerped cursor spotlight */}
+        <div
+          ref={glowRef}
+          aria-hidden="true"
+          className="pointer-events-none absolute -inset-px rounded-3xl opacity-0"
+        />
 
-          {/* Dynamic glass specular sheen */}
-          <div
-            ref={sheenRef}
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 rounded-3xl opacity-0"
-          />
+        {/* Dynamic glass specular sheen */}
+        <div
+          ref={sheenRef}
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 rounded-3xl opacity-0"
+        />
 
-          {/* Apply caller layout classes directly to inner content wrapper */}
-          <div className={`relative z-10 h-full ${className}`}>{children}</div>
-        </div>
+        <div className={`relative z-10 h-full ${className}`}>{children}</div>
       </div>
     </div>
   );

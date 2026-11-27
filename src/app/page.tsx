@@ -50,12 +50,12 @@ export default function HomePage() {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#07080D] text-zinc-100">
-      {/* Living aurora & spatial dot field */}
+      {/* Living aurora & spatial dot field (radial gradients — zero GPU blur cost) */}
       <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-0">
         <div className="bg-spatial-dots absolute inset-0 opacity-45 [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_85%)]" />
-        <div className="animate-aurora-1 absolute -top-40 left-[6%] h-[520px] w-[520px] rounded-full bg-sky-500/[0.11] blur-[140px]" />
-        <div className="animate-aurora-2 absolute top-[14%] right-[4%] h-[480px] w-[480px] rounded-full bg-violet-500/[0.11] blur-[140px]" />
-        <div className="animate-aurora-1 absolute bottom-[6%] left-[28%] h-[420px] w-[420px] rounded-full bg-emerald-500/[0.08] blur-[140px]" />
+        <div className="animate-aurora-1 absolute -top-48 left-[2%] h-[680px] w-[680px] rounded-full bg-[radial-gradient(circle,rgba(56,189,248,0.13)_0%,transparent_68%)]" />
+        <div className="animate-aurora-2 absolute top-[10%] right-[0%] h-[640px] w-[640px] rounded-full bg-[radial-gradient(circle,rgba(139,92,246,0.13)_0%,transparent_68%)]" />
+        <div className="animate-aurora-1 absolute bottom-[0%] left-[22%] h-[580px] w-[580px] rounded-full bg-[radial-gradient(circle,rgba(16,185,129,0.09)_0%,transparent_68%)]" />
       </div>
 
       {/* Smooth lerped cursor ambient glow */}

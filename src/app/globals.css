@@ -29,21 +29,21 @@ body {
   color: #ffffff;
 }
 
-/* Natural, calm magnetic levitation — pure vertical buoyancy, zero wobble */
+/* Pure GPU-composited vertical levitation (zero subpixel snapping) */
 @keyframes float-1 {
   0%,
   100% {
     transform: translate3d(0, 0px, 0);
   }
   50% {
-    transform: translate3d(0, -8px, 0);
+    transform: translate3d(0, -10px, 0);
   }
 }
 
 @keyframes float-2 {
   0%,
   100% {
-    transform: translate3d(0, -6px, 0);
+    transform: translate3d(0, -8px, 0);
   }
   50% {
     transform: translate3d(0, 2px, 0);
@@ -53,147 +53,85 @@ body {
 @keyframes float-3 {
   0%,
   100% {
-    transform: translate3d(0, 1px, 0);
+    transform: translate3d(0, 2px, 0);
   }
   50% {
-    transform: translate3d(0, -7px, 0);
+    transform: translate3d(0, -8px, 0);
   }
 }
 
 @keyframes float-4 {
   0%,
   100% {
-    transform: translate3d(0, -5px, 0);
+    transform: translate3d(0, -6px, 0);
   }
   50% {
-    transform: translate3d(0, 2px, 0);
-  }
-}
-
-/* Soft synchronized levitation shadows */
-@keyframes shadow-1 {
-  0%,
-  100% {
-    transform: scaleX(1) scaleY(1);
-    opacity: 0.68;
-  }
-  50% {
-    transform: scaleX(0.92) scaleY(0.9);
-    opacity: 0.44;
-  }
-}
-
-@keyframes shadow-2 {
-  0%,
-  100% {
-    transform: scaleX(0.92) scaleY(0.9);
-    opacity: 0.44;
-  }
-  50% {
-    transform: scaleX(1) scaleY(1);
-    opacity: 0.68;
-  }
-}
-
-@keyframes shadow-3 {
-  0%,
-  100% {
-    transform: scaleX(1) scaleY(1);
-    opacity: 0.66;
-  }
-  50% {
-    transform: scaleX(0.92) scaleY(0.9);
-    opacity: 0.44;
-  }
-}
-
-@keyframes shadow-4 {
-  0%,
-  100% {
-    transform: scaleX(0.93) scaleY(0.9);
-    opacity: 0.46;
-  }
-  50% {
-    transform: scaleX(1) scaleY(1);
-    opacity: 0.68;
+    transform: translate3d(0, 3px, 0);
   }
 }
 
 @keyframes aurora-drift-1 {
   0%,
   100% {
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0);
   }
   50% {
-    transform: translate3d(32px, -24px, 0) scale(1.07);
+    transform: translate3d(30px, -20px, 0);
   }
 }
 
 @keyframes aurora-drift-2 {
   0%,
   100% {
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0);
   }
   50% {
-    transform: translate3d(-28px, 24px, 0) scale(1.05);
+    transform: translate3d(-26px, 22px, 0);
   }
 }
 
 @keyframes node-breathe {
   0%,
   100% {
-    opacity: 0.68;
-    box-shadow: 0 0 0 0 rgba(56, 189, 248, 0);
+    opacity: 0.7;
   }
   50% {
     opacity: 1;
-    box-shadow: 0 0 14px -2px rgba(56, 189, 248, 0.35);
   }
 }
 
-/* Irrational-ratio durations so cards never sync into a robotic beat */
 .animate-float-1 {
-  animation: float-1 9.3s ease-in-out infinite;
+  animation: float-1 6.4s ease-in-out infinite;
+  will-change: transform;
 }
 
 .animate-float-2 {
-  animation: float-2 11.1s ease-in-out infinite;
+  animation: float-2 7.3s ease-in-out infinite;
+  will-change: transform;
 }
 
 .animate-float-3 {
-  animation: float-3 12.7s ease-in-out infinite;
+  animation: float-3 8.1s ease-in-out infinite;
+  will-change: transform;
 }
 
 .animate-float-4 {
-  animation: float-4 10.4s ease-in-out infinite;
-}
-
-.animate-shadow-1 {
-  animation: shadow-1 9.3s ease-in-out infinite;
-}
-
-.animate-shadow-2 {
-  animation: shadow-2 11.1s ease-in-out infinite;
-}
-
-.animate-shadow-3 {
-  animation: shadow-3 12.7s ease-in-out infinite;
-}
-
-.animate-shadow-4 {
-  animation: shadow-4 10.4s ease-in-out infinite;
+  animation: float-4 6.9s ease-in-out infinite;
+  will-change: transform;
 }
 
 .animate-aurora-1 {
   animation: aurora-drift-1 20s ease-in-out infinite;
+  will-change: transform;
 }
 
 .animate-aurora-2 {
   animation: aurora-drift-2 24s ease-in-out infinite;
+  will-change: transform;
 }
 
 .animate-node-breathe {
-  animation: node-breathe 3.8s ease-in-out infinite;
+  animation: node-breathe 3.4s ease-in-out infinite;
 }
 
 /* Subtle spatial dot grid */
@@ -210,10 +148,6 @@ body {
   .animate-float-2,
   .animate-float-3,
   .animate-float-4,
-  .animate-shadow-1,
-  .animate-shadow-2,
-  .animate-shadow-3,
-  .animate-shadow-4,
   .animate-aurora-1,
   .animate-aurora-2,
   .animate-node-breathe {
