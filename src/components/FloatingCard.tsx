@@ -140,9 +140,9 @@ export function FloatingCard({
         if (glowRef.current) {
           if (s.currentOpacity > 0.004) {
             glowRef.current.style.opacity = s.currentOpacity.toFixed(3);
-            glowRef.current.style.background = `radial-gradient(460px circle at ${s.currentGlowX.toFixed(
+            glowRef.current.style.background = `radial-gradient(280px circle at ${s.currentGlowX.toFixed(
               1
-            )}% ${s.currentGlowY.toFixed(1)}%, ${ACCENT_GLOW[accent]}, transparent 64%)`;
+            )}% ${s.currentGlowY.toFixed(1)}%, ${ACCENT_GLOW[accent]}, transparent 62%)`;
           } else if (glowRef.current.style.opacity !== "0") {
             glowRef.current.style.opacity = "0";
           }
