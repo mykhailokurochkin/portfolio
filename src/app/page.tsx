@@ -156,7 +156,7 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <pre className="mt-3.5 overflow-x-auto whitespace-pre-wrap break-words font-mono text-[11px] leading-5 text-zinc-300 sm:mt-4 sm:whitespace-pre sm:text-[13px] sm:leading-6">
+                <pre className="mt-3.5 whitespace-pre-wrap break-words font-mono text-[11px] leading-5 text-zinc-300 sm:mt-4 sm:text-[12px] sm:leading-6">
                   <code>
                     <span className="text-violet-400">export const</span>{" "}
                     <span className="text-sky-300">engineer</span>{" "}
